@@ -1,0 +1,22 @@
+<div class="my-vue-editor" :class="{'full-screen':fullScreen}" :style="{'z-index':zIndex}">
+    <div class="toolbar" :style="{'z-index':zIndex+1}" ref="toolbar" data-editor="toolbar">
+        <ul class="tabs">
+            <template v-for="module in modules">
+              <template v-if="!module.hasTab">
+                <li :title="locale[module.i18n]" class="tab" :class="{highLight: module.moduleInspectResult, forbidden: module.forbidden}" @click="activeModule(module)">
+                  <span class="icon" :class="module.icon"></span>
+                </li>
+              </template>
+              <template v-else>
+                <keep-alive>
+                  <li class="tab" :is="module.tabName" :activeItem="module.moduleInspectResult" :class="{highLight: module.moduleInspectResult, forbidden: module.forbidden}" @click="activeModule(module)"></li>
+                </keep-alive>
+              </template>
+            </template>
+        </ul>
+    </div>
+  <!--do not change content zone 's tag name cause row's inspect mechanism base on p-->
+    <p class='content' :is="constantConfig.ROW_TAG" :spellcheck="spellcheck" ref="content" id="editor-content" :style="contentStyle" data-editor="content"
+         contenteditable :data-editor-placeholder="placeholder" v-drag-pic="handleDragPic">
+    </p>
+</div>

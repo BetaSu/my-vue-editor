@@ -1,0 +1,23 @@
+{
+  "name": "my-vue-editor",
+  "version": "1.0.0",
+  "description": "a rich text editor for VUE 2.x",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BetaSu/my-vue-editor.git"
+  },
+  "keywords": [
+    "vue",
+    "editor"
+  ],
+  "author": "betaSu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BetaSu/my-vue-editor/issues"
+  },
+  "homepage": "https://github.com/BetaSu/my-vue-editor#readme"
+}

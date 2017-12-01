@@ -206,6 +206,33 @@ const m = {
     }
     return result
   },
+  /*
+   * find an ancestor element through style name and style value
+   * @param style {obj} styleName: styleValue
+   * @return
+   **/
+  findSpecialAncestorByStyle (node, style, firstOne = true, border) {
+    let result
+    let contentZone = am.editZone()
+    border = border || contentZone
+    while (node && (firstOne ? !result : true) && (node !== border)) {
+      if (!border || !border.contains(node)) return
+      let parent = node.parentNode
+      let isTarget = true
+      Object.keys(style).forEach(styleName => {
+        if (style[styleName] !== parent.style[styleName]) {
+          isTarget = false
+        }
+      })
+      if (isTarget) {
+        result = parent
+        node = parent
+      } else {
+        node = parent
+      }
+    }
+    return result
+  },
 
   getNodeNum (ancestor, nodeName) {
     return ancestor.querySelectorAll(nodeName).length
@@ -273,11 +300,17 @@ const m = {
     let rows = Array.from(am.editZone().children)
     let result
     rows.forEach(row => {
-      if (row.contains(node)) {
+      if (row.contains(node) || row === node) {
         result = row
       }
     })
     return result
+  },
+  /*
+   * return all rows
+   **/
+  getRows () {
+    return Array.from(am.editZone().children)
   },
   /*
    * whether current node is a row
@@ -332,6 +365,102 @@ const m = {
         elements.push(elements[elements.length - 1].nextSibling)
       }
     }
+  },
+  /*
+   * get node's previous row which has content
+   **/
+  getPreviousRow (node) {
+    let row = m.getRow(node)
+    let preRow
+    let rows = m.getRows()
+    let rowIndex = null
+    rows.forEach((curRow, index) => {
+      if (curRow === row) {
+        rowIndex = index
+      }
+      if (rowIndex === null) {
+        if (curRow.innerHTML !== '') {
+          preRow = curRow
+        }
+      }
+    })
+    return preRow
+  },
+  /*
+   * whether target row is empty
+   **/
+  isEmptyRow (node) {
+    let row = m.isRow(node) ? node : m.getRow(node)
+    return row.innerHTML.replace(/<br>/g, '') === ''
+  },
+  /*
+   * whether target node is empty
+   **/
+  isEmptyNode (node) {
+    let ctn = node.innerText || node.nodeValue
+    if (typeof ctn !== 'string') return
+    return ctn.replace('\n', '').replace(/\u200B/g, '') === ''
+  },
+  /*
+   * try to collapse at target row
+   **/
+  collapseAtRow (node) {
+    let row = m.isRow(node) ? node : m.getRow(node)
+    let s = am.getSelection()
+    try {
+      s.collapse(row, 1)
+    } catch (e) {
+      s.collapse(row, 0)
+    }
+  },
+  /*
+   * searching nested ancestors till border to find the specified tagName
+   * @param {node} from which node
+   * @param {arr} includes tag names of target tag
+   * @param {node} search border
+   * @return {arr}
+   **/
+  findExistTagTillBorder (node, tagNamelist, border) {
+    let result = []
+    let contentZone = am.editZone()
+    border = border || contentZone
+    while (node && node !== border) {
+      if (!border || !border.contains(node)) return
+      let nodeName = node.nodeName
+      if (nodeName && tagNamelist.includes(nodeName)) {
+        if (!result.includes(nodeName)) {
+          result.push(nodeName)
+        }
+      }
+      node = node.parentNode
+    }
+    return result
+  },
+  /*
+   * return a nested DOM data through a tag name list
+   **/
+  createNestDOMThroughList (list) {
+    let result = {
+      dom: null,
+      deepestId: null,
+      deepest: null
+    }
+    list.forEach((tag, index) => {
+      let ele = document.createElement(tag)
+      result[index] = ele
+      let parent = result[index - 1]
+      if (parent) {
+        parent.appendChild(ele)
+      }
+      if (index === list.length - 1) {
+        result.deepest = ele
+        result.deepestId = am.createRandomId('deepest')
+        result.dom = result['0']
+        ele.id = result.deepestId
+        ele.innerHTML = '&#8203;'
+      }
+    })
+    return result
   }
 }
 

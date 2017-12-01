@@ -5,6 +5,6 @@ export default {
     rh.editor.execCommand('italic')
   },
   inspect (add) {
-    add('tag', 'I').add('style', {'font-style': 'italic'})
+    add('tag', 'I').add('style', {'fontStyle': 'italic'})
   }
 }

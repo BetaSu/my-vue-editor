@@ -1,6 +1,6 @@
 <li ref="tab" class="font-tab tab-with-dropdown" @mouseenter="showListFn" @mouseleave="showList = false">
   {{choosed.name}}
   <ul class="dropdown" v-if="showList">
-    <li v-for="(val, key) in fontAttrMap" @click="changeAttr(val)">{{ val.name }}</li>
+    <li v-if="val.name" v-for="(val, key) in fontAttrMap" @click="changeAttr(val)">{{ val.name }}</li>
   </ul>
 </li>

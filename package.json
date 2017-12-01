@@ -4,7 +4,8 @@
   "description": "a rich text editor for VUE 2.x",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --open"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,21 @@
   "bugs": {
     "url": "https://github.com/BetaSu/my-vue-editor/issues"
   },
-  "homepage": "https://github.com/BetaSu/my-vue-editor#readme"
+  "homepage": "https://github.com/BetaSu/my-vue-editor#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.7",
+    "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^2.30.1",
+    "lrz": "^4.9.40",
+    "style-loader": "^0.19.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "webpack": "^3.9.1",
+    "webpack-dev-server": "^2.7.1"
+  }
 }

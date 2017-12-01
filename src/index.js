@@ -3,6 +3,7 @@ import buildInModules from './modules/index'
 import buildInShortcut from './shortcut'
 import constantConfig from './constant-config'
 import editor from './editor/editor'
+import buildInCommands from './commands'
 import initExcludeRule from './module-inspect/load-module-inspect-exclude-rules'
 import Inspector from './module-inspect'
 import i18nZhCn from './i18n/zh-cn'
@@ -74,6 +75,9 @@ class Editor {
 
       if (module.tab) {
         module.tab.module = module
+
+        // add activeItem prop
+        module.tab.props = module.tab.props ? Object.assign(module.tab.props, {activeItem: [String, Boolean], forbidden: Boolean}) : {activeItem: [String, Boolean], forbidden: Boolean}
         module.tabName = `tab-${module.name}`
         components[module.tabName] = module.tab
       }
@@ -111,15 +115,17 @@ class Editor {
     // placeholder
     const placeholder = options.placeholder
 
-    // commands
-    const commands = options.commands
+    // merge commands
+    if (isObj(options.commands)) {
+      Object.assign(buildInCommands, options.commands)
+    }
 
     // spellcheck
     const spellcheck = options.spellcheck || false
 
     const compo = mixin(editor, {
       data () {
-        return {modules, locale, shortcut, modulesMap, commands, placeholder, spellcheck, constantConfig}
+        return {modules, locale, shortcut, modulesMap, placeholder, spellcheck, constantConfig}
       },
       components
     })

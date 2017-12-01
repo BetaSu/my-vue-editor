@@ -225,9 +225,7 @@ export default {
     const toolbar = this.$refs.toolbar
     content.innerHTML = this.content
     content.addEventListener('mouseup', e => {
-      if (content.contains(e.target)) {
-        this.saveCurrentRange()
-      }
+      this.saveCurrentRange()
       this.styleInspect()
     }, false)
     // toolbar.addEventListener('mousedown', this.saveCurrentRange, false)
@@ -236,11 +234,12 @@ export default {
       this.saveCurrentRange()
       this.styleInspect()
     }, false)
-    content.addEventListener('mouseout', (e) => {
-      if (e.target === content) {
-        this.saveCurrentRange()
-      }
+    content.addEventListener('mouseout', e => {
+      this.saveCurrentRange()
     }, false)
+    content.addEventListener('paste', e => {
+      this.execCommand('paste', e, true)
+    })
     this.touchHandler = (e) => {
       if (content.contains(e.target)) {
         this.saveCurrentRange()

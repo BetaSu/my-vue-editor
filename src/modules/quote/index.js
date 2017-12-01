@@ -2,7 +2,6 @@ export default {
   name: 'quote',
   icon: 'iui-icon iui-icon-quote',
   show: true,
-  type: 'block',
   mounted (editor) {
     editor.execCommand('initQuote')
   },

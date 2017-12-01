@@ -3,5 +3,10 @@ import tab from './tab'
 export default {
   name: 'align',
   icon: 'iui-icon iui-icon-align',
-  tab
+  tab,
+  inspect (add) {
+    add('style', {
+      'textAlign': ['left', 'center', 'right', 'justify']
+    })
+  }
 }

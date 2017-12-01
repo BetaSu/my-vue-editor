@@ -9,14 +9,14 @@
               </template>
               <template v-else>
                 <keep-alive>
-                  <li class="tab" :is="module.tabName" :activeItem="module.moduleInspectResult" :class="{highLight: module.moduleInspectResult, forbidden: module.forbidden}" @click="activeModule(module)"></li>
+                  <li class="tab" :is="module.tabName" :activeItem="module.moduleInspectResult" :forbidden="module.forbidden" :class="{highLight: module.moduleInspectResult, forbidden: module.forbidden}" @click="activeModule(module)"></li>
                 </keep-alive>
               </template>
             </template>
         </ul>
     </div>
-  <!--do not change content zone 's tag name cause row's inspect mechanism base on p-->
+
     <p class='content' :is="constantConfig.ROW_TAG" :spellcheck="spellcheck" ref="content" id="editor-content" :style="contentStyle" data-editor="content"
-         contenteditable :data-editor-placeholder="placeholder" v-drag-pic="handleDragPic">
+         contenteditable="plaintext-only" :data-editor-placeholder="placeholder" v-drag-pic="handleDragPic">
     </p>
 </div>

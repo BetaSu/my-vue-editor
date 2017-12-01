@@ -88,10 +88,22 @@ class Inspector {
       Object.keys(Inspector.attributes).forEach(moduleName => {
         let moduleAttr = Inspector.attributes[moduleName]
         Object.keys(moduleAttr).forEach(item => {
-          if (node.getAttribute(item) === moduleAttr[item] || node.getAttribute(item) !== null) {
+          let value = moduleAttr[item]
+          let nodeVal = node.getAttribute(item)
+          if (Array.isArray(value)) {
+            value.forEach(val => {
+              if (nodeVal === val) {
+                if (!result.includes(moduleName)) {
+                  result.push(moduleName)
+                  Inspector.activeItems[moduleName] = val
+                }
+              }
+            })
+          }
+          if (typeof value === 'string' && nodeVal === value || nodeVal !== null) {
             if (!result.includes(moduleName)) {
               result.push(moduleName)
-              Inspector.activeItems[moduleName] = moduleAttr[item]
+              Inspector.activeItems[moduleName] = value
             }
           }
         })

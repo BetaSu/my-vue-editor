@@ -3,7 +3,7 @@ const methods = {
   /*
    * func create a new row element
    * @param {obj} data
-   *          tag {str} default: 'div'
+   *          tag {str}
    *          contenteditable {boolean} default: true
    *          id {boolean} whether need a id default: false
    *          br {boolean} whether need a br element after current row element default: false
@@ -73,6 +73,13 @@ const methods = {
     let selection = methods.getSelection()
     selection.removeAllRanges()
     selection.addRange(range)
+  },
+  getRange () {
+    let s = methods.getSelection()
+    if (s.rangeCount) {
+      return s.getRangeAt(0) 
+    }
+    return 
   }
 }
 

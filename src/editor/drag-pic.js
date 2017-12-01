@@ -2,14 +2,6 @@
  * directive drag and drop pic
  **/
 
-const imgType = {
-  'image/png': 1,
-  'image/jpeg': 1,
-  'image/gif': 1,
-  'image/jpg': 1,
-  'image/svg': 1
-}
-
 export default {
   bind (el, binding, vnode) {
     let editor = vnode.context
@@ -35,7 +27,7 @@ export default {
         let files = e.dataTransfer.files
         for (let i = 0; i< files.length; i ++) {
           let curFile = files[i]
-          if (curFile.size && imgType[curFile.type]) {
+          if (curFile.size && curFile.type.includes('image')) {
             binding.value(curFile)
           }
         }

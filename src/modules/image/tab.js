@@ -11,7 +11,7 @@ export default {
   },
   methods: {
     pick() {
-      if (this.$refs.item.classList.contains('forbidden')) return
+      if (this.forbidden) return
       this.$refs.file.click()
     },
     process(e) {

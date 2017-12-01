@@ -18,6 +18,7 @@ import quote from './quote'
 import indent from './indent'
 import ul from './ul'
 import linethrough from './linethrough'
+import itodo from './icourt-todo'
 
 
 /**
@@ -43,5 +44,6 @@ export default [
   quote,
   indent,
   ul,
-  linethrough
+  linethrough,
+  itodo
 ]

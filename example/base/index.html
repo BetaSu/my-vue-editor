@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript" src="../../dist/my-vue-editor.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+        }
+        #app {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <my-vue-editor></my-vue-editor>
+</div>
+<script>
+  let editorConfig = {
+    modules: [
+      'font',
+      'bold',
+      'italic',
+      'underline',
+      'linethrough',
+      'ul',
+      'indent',
+      'align',
+      'image',
+      'quote',
+      'todo'
+    ]
+  }
+  Vue.use(myVueEditor.default, editorConfig)
+  let app = new Vue({
+    el: '#app'
+  })
+</script>
+</body>
+</html>

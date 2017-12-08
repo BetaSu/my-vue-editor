@@ -2,7 +2,7 @@
 A rich text editor based on Vue2.x<br>
 <a href="https://github.com/BetaSu/my-vue-editor/blob/master/README_CN.md">中文文档</a><br>
 ## demo
-<a href="https://betasu.github.io/my-vue-editor/dist/">click here to see demo</a><br>
+<a href="https://betasu.github.io/my-vue-editor/dist/index.html">click here to see demo</a><br>
 More demo please refer to the example directory
 ## Introduction
 Our editor is based on <a href="https://github.com/PeakTai/vue-html5-editor">vue-html5-editor</a> secondary development. Thanks to its author <a href="https://github.com/PeakTai">PeakTai</a> for providing a concise rich text editor plug-in, on the basis of which we have rewritten the native method and extended the functionality.

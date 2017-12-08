@@ -1,9 +1,9 @@
 <div class="my-vue-editor" :class="{'full-screen':fullScreen}" :style="{'z-index':zIndex}">
-    <div class="toolbar" :style="{'z-index':zIndex+1}" ref="toolbar" data-editor="toolbar">
+    <nav class="toolbar" :style="{'z-index':zIndex+1}" ref="toolbar" data-editor="toolbar">
         <ul class="tabs">
             <template v-for="module in modules">
               <template v-if="!module.hasTab">
-                <li :title="locale[module.i18n]" class="tab" :class="{highLight: module.moduleInspectResult, forbidden: module.forbidden}" @click="activeModule(module)">
+                <li :title="locale[module.i18n]" class="tab btn" :class="{highLight: module.moduleInspectResult, forbidden: module.forbidden}" @click="activeModule(module)">
                   <span class="icon" :class="module.icon"></span>
                 </li>
               </template>
@@ -14,9 +14,9 @@
               </template>
             </template>
         </ul>
-    </div>
+    </nav>
 
     <p class='content' :is="constantConfig.ROW_TAG" :spellcheck="spellcheck" ref="content" id="editor-content" :style="contentStyle" data-editor="content"
-         contenteditable="plaintext-only" :data-editor-placeholder="placeholder" v-drag-pic="handleDragPic">
+         contenteditable="plaintext-only" v-drag-pic="handleDragPic">
     </p>
 </div>

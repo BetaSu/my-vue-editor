@@ -1,6 +1,6 @@
 export default {
   name: 'bold',
-  icon: 'iui-icon iui-icon-bold',
+  icon: 'fa fa-bold',
   handler: function (rh) {
     rh.editor.execCommand('bold')
   },

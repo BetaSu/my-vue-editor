@@ -1,21 +1,21 @@
 export default {
   // through font tag
-  '6': {
+  'xx-large': {
     fontSize: 6,
     name: '标题'
   },
-  '5': {
+  'x-large': {
     fontSize: 5,
     name: '副标题'
   },
-  '4': {
+  'large': {
     fontSize: 4,
     name: '小标题'
   },
-  '3': {
+  'medium': {
     fontSize: 3,
     name: '正文'
   },
-  default: '3'
+  default: 'medium'
 }
 

@@ -3,7 +3,22 @@ export default {
   template,
   watch: {
     activeItem (n) {
-      // do module inspect logic here
+      n = n || 'left'
+      let map = {
+        'left': 2,
+        'center': 0,
+        'right': 1
+      }
+      let index = map[n]
+      let options = Object.keys(this.alignMap)
+      let key = options[index]
+      this.choosed = {
+        icon: 'align-' + n,
+        index,
+        key,
+        type: this.alignMap[key]
+      }
+      this.setAlign(index)
     }
   },
   data () {
@@ -11,7 +26,6 @@ export default {
       alignMap: {
         '居中': 'justifyCenter',
         '居右': 'justifyRight',
-        '左右': 'justify',
         '居左': 'justifyLeft'
       },
       choosed: {}
@@ -21,12 +35,9 @@ export default {
     setAlign (index) {
       let options = Object.keys(this.alignMap)
       let key = options[index]
-      this.choosed = {
-        index,
-        key,
-        type: this.alignMap[key]
-      }
-      this.$parent.execCommand(this.choosed.type)
+      this.$parent.execCommand(this.alignMap[key])
+      this.$parent.saveCurrentRange()
+      this.$parent.moduleInspect()
     },
     changeAlign () {
       if (this.forbidden) return

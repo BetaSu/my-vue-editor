@@ -1,7 +1,7 @@
 export default {
   name: 'underline',
-  icon: 'iui-icon iui-icon-underline',
-  handler: function (rh, module) {
+  icon: 'fa fa-underline',
+  handler (rh) {
     rh.editor.execCommand('underline')
   },
   inspect (add) {

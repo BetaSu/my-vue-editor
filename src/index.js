@@ -112,9 +112,6 @@ class Editor {
       item.name = key
     })
 
-    // placeholder
-    const placeholder = options.placeholder
-
     // merge commands
     if (isObj(options.commands)) {
       Object.assign(buildInCommands, options.commands)
@@ -125,7 +122,7 @@ class Editor {
 
     const compo = mixin(editor, {
       data () {
-        return {modules, locale, shortcut, modulesMap, placeholder, spellcheck, constantConfig}
+        return {modules, locale, shortcut, modulesMap, spellcheck, constantConfig}
       },
       components
     })
@@ -143,3 +140,7 @@ class Editor {
 }
 
 export default Editor
+
+// to change Babel6 export's result
+module.exports = Editor
+

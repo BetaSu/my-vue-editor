@@ -14,7 +14,7 @@ export default {
         selection.collapse(e.target, 0)
       }
       editor.saveCurrentRange()
-      editor.styleInspect()
+      editor.moduleInspect()
     }
     let onDragLeave = e => {
       e.preventDefault()
@@ -24,6 +24,7 @@ export default {
       const selection = window.getSelection ? window.getSelection() : document.getSelection()
       if (e.dataTransfer && e.dataTransfer.files) {
         e.preventDefault()
+        console.log(e.target)
         let files = e.dataTransfer.files
         for (let i = 0; i< files.length; i ++) {
           let curFile = files[i]

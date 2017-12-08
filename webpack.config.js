@@ -20,7 +20,10 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Development'
+      title: 'dev',
+      filename: 'index.html',
+      template: './example/base/index.html',
+      inject: 'head'
     }),
     new webpack.HotModuleReplacementPlugin()
   ],

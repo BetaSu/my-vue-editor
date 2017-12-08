@@ -1,10 +1,10 @@
 export default {
   name: 'ul',
-  icon: 'iui-icon iui-icon-list',
+  icon: 'fa fa-list-ul',
   handler: function (rh) {
     rh.editor.execCommand('insertUnorderedList')
   },
   inspect (add) {
-    add('tag', 'UL').add('tag', 'LI')
+    add('tag', 'UL')
   }
 }

@@ -1,6 +1,6 @@
 export default {
   name: 'todo',
-  icon: 'iui-icon iui-icon-checked-line',
+  icon: 'fa fa-check-square',
   exclude: 'ALL_BUT_MYSELF',
   mounted (editor) {
     editor.execCommand('initTodo')

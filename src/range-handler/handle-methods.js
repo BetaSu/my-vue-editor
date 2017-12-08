@@ -14,7 +14,7 @@ const m = {
     })
   },
   /**
-   * func find all the descendant text nodes of a element
+   * find all the descendant text nodes of a element
    * @param ancestor
    */
   getDescendantTextNodes (ancestor) {
@@ -207,6 +207,22 @@ const m = {
     return result
   },
   /*
+   * find target style
+   **/
+  findSpecialAncestorStyle (node, styleName, firstOne = true, border) {
+    let result
+    let contentZone = am.editZone()
+    border = border || contentZone
+    while (node && (firstOne ? !result : true) && (node !== border)) {
+      if (!border || !border.contains(node)) return
+      if (node.style && node.style[styleName]) {
+        result = node.style[styleName]
+      }
+      node = node.parentNode
+    }
+    return result
+  },
+  /*
    * find an ancestor element through style name and style value
    * @param style {obj} styleName: styleValue
    * @return
@@ -306,6 +322,19 @@ const m = {
     })
     return result
   },
+  textToRow (node) {
+    if (node.parentNode === am.editZone() && node.nodeType === Node.TEXT_NODE) {
+      document.execCommand('formatBlock', false, constant.ROW_TAG_UPPERCASE)
+    }
+    return node
+  },
+  /*
+   * get row, if there's not, create one
+   **/
+  forceGetRow (node) {
+    node = m.textToRow(node)
+    return m.getRow(node)
+  },
   /*
    * return all rows
    **/
@@ -391,13 +420,18 @@ const m = {
    **/
   isEmptyRow (node) {
     let row = m.isRow(node) ? node : m.getRow(node)
-    return row.innerHTML.replace(/<br>/g, '') === ''
+    if (row.getAttribute) {
+      if (typeof row.getAttribute('data-editor-todo') === 'string' || typeof row.getAttribute('data-editor-quote') === 'string') {
+        return false
+      }
+    }
+    return row.innerText.replace('\n', '').replace(/\u200B/g, '') === ''
   },
   /*
    * whether target node is empty
    **/
   isEmptyNode (node) {
-    let ctn = node.innerText || node.nodeValue
+    let ctn = typeof node.innerText === 'string' ? node.innerText : node.nodeValue
     if (typeof ctn !== 'string') return
     return ctn.replace('\n', '').replace(/\u200B/g, '') === ''
   },

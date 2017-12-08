@@ -1,6 +1,6 @@
 export default {
   name: 'linethrough',
-  icon: 'iui-icon iui-icon-linethrough',
+  icon: 'fa fa-strikethrough',
   handler: function (rh) {
     rh.editor.execCommand('strikeThrough')
   },

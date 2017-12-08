@@ -3,7 +3,6 @@ import constant from '../constant-config'
 
 const t = {
   'todo' (rh, data) {
-    console.log('todo')
     let row = rh.newRow({
       br: true
     })

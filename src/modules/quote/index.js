@@ -1,6 +1,6 @@
 export default {
   name: 'quote',
-  icon: 'iui-icon iui-icon-quote',
+  icon: 'fa fa-quote-right',
   show: true,
   mounted (editor) {
     editor.execCommand('initQuote')

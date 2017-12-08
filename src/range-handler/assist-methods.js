@@ -65,7 +65,8 @@ const methods = {
     const range = document.createRange()
     if (checkAll) {
       range.setStart(node, 0)
-      range.setEnd(node, node.childNodes ? node.childNodes.length : 0)
+      let end = node.childNodes.length ? node.childNodes.length : (node.length ? node.length : 0)
+      range.setEnd(node, end)
     } else {
       range.setStart(node, 0)
       range.setEnd(node, 0)
@@ -77,9 +78,9 @@ const methods = {
   getRange () {
     let s = methods.getSelection()
     if (s.rangeCount) {
-      return s.getRangeAt(0) 
+      return s.getRangeAt(0)
     }
-    return 
+    return
   }
 }
 

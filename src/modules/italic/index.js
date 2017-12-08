@@ -1,6 +1,6 @@
 export default {
   name: 'italic',
-  icon: 'iui-icon iui-icon-italic',
+  icon: 'fa fa-italic',
   handler (rh) {
     rh.editor.execCommand('italic')
   },

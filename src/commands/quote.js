@@ -3,7 +3,6 @@ import commands from './index'
 const q = {
   // only set contenteditable:false in parent node can child node trigger keydown listener
   'quote' (rh, isInQuote) {
-    console.log('quote!')
     let node = rh.range.commonAncestorContainer
     if (isInQuote) {
       node = node.nodeType === Node.TEXT_NODE ? node.parentNode : node
@@ -32,6 +31,19 @@ const q = {
             rh.insertAfter(qr, quoteRows[index - 1])
           }
         })
+        let s = rh.getSelection()
+        if (quoteRows.length) {
+          const range = document.createRange()
+          range.setStart(quoteRows[0], 0)
+          range.setEnd(quoteRows[quoteRows.length - 1], 1)
+          s.removeAllRanges()
+          s.addRange(range)
+        } else {
+          // it's a empty quote
+          let newRow = rh.newRow({br: true})
+          quote.parentNode.replaceChild(newRow, quote)
+          s.collapse(newRow, 1)
+        }
       }
       return
     }
@@ -39,14 +51,16 @@ const q = {
     let curRow = rh.getRow(node)
 
     // is at a empty row without row element, then create a row
-    if (!curRow) {
+    // or texts has no common parent row
+    if (!curRow && !texts.length) {
       let v = rh.newRow()
       let newRow = rh.newRow({br: true})
       v.appendChild(newRow)
       commands.insertHTML(rh, newRow.outerHTML)
       let s = rh.getSelection()
       texts.push(s.focusNode)
-    } else if (!texts.length) {
+    }
+    if (!texts.length) {
       texts.push(curRow)
     }
 
@@ -61,6 +75,12 @@ const q = {
     let quoteRows = []
     texts.forEach((text, index) => {
       let curRow = rh.getRow(text)
+
+      // create a row for text without row
+      if (!curRow && text.nodeValue) {
+        curRow = rh.newRow()
+        curRow.appendChild(text)
+      }
       if (curRow && !quoteRows.includes(curRow)) {
         quoteRows.push(curRow)
       }
@@ -74,14 +94,16 @@ const q = {
       quoteBlock.appendChild(qr.cloneNode(true))
       anchorRow = qr
     })
-    // container.appendChild(quote)
-    // let aNode = rh.range.commonAncestorContainer
-    // // if range is not at edit zone, insertHTML would run fail
-    // if (aNode !== rh.editZone()) {
-    //   aNode.parentNode.removeChild(aNode)
-    // }
-    // commands['insertHTML'](rh, container.innerHTML)
-    anchorRow.parentNode.replaceChild(quote, anchorRow)
+
+    if (anchorRow.parentNode) {
+      anchorRow.parentNode.replaceChild(quote, anchorRow)
+    } else {
+      // current row is created and has no parent
+      let v = rh.newRow()
+      v.appendChild(quote)
+      rh.range.deleteContents()
+      commands['insertHTML'](rh, v.innerHTML)
+    }
     const curQuote = document.querySelector(`[data-editor-quote='${id}']`)
     if (!curQuote.lastElementChild) return
     rh.getSelection().collapse(curQuote.lastElementChild, curQuote.lastElementChild.innerText ? 1 : 0)
@@ -90,22 +112,19 @@ const q = {
     document.addEventListener('keydown', e => {
       let quote = rh.findSpecialAncestor(e.target, '[data-editor-quote]')
       if (quote) {
-        console.log('init quote')
         let s = rh.getSelection()
         let node = s.anchorNode
         let ctn = node.innerText || node.nodeValue
         if (e.keyCode === 13) {
           if (ctn.replace('\n', '') === '') {
             e.preventDefault()
-            let sibling = quote.nextSibling
-            if (!sibling || sibling.innerHTML === '') {
-              sibling = rh.newRow({
-                br: true
-              })
-              rh.insertAfter(sibling, quote)
+            let newRow = rh.newRow({br: true})
+            rh.insertAfter(newRow, quote)
+            if (node.parentNode.children.length > 1) {
+              node.parentNode.removeChild(node)
             }
-            node.parentNode.removeChild(node)
-            rh.getSelection().collapse(sibling, 0)
+            rh.getSelection().collapse(newRow, 0)
+            return
           }
         }
         if (e.keyCode === 8) {

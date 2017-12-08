@@ -10,10 +10,11 @@ import quote from './quote'
 import todo from './todo'
 import keydown from './keydown'
 import deleteModule from './delete'
+import justifyRight from './justifyRight'
+import justifyLeft from './justifyLeft'
+import justifyCenter from './justifyCenter'
 import {isObj} from '../util'
 import constant from '../constant-config'
-
-import itodo from './todo-icourt'
 
 const commands = {
   /*
@@ -163,17 +164,24 @@ const commands = {
     if (document.execCommand('insertHTML', false, arg)) {
       return
     }
-    // hack
-    const fragment = document.createDocumentFragment()
-    const div = document.createElement('div')
-    div.innerHTML = arg
-    if (div.hasChildNodes()) {
-      for (let i = 0; i < div.childNodes.length; i++) {
-        fragment.appendChild(div.childNodes[i].cloneNode(true))
+    commands['forceInsertHTML'](rh, arg)
+  },
+  /*
+   * insertHTML would insert DOM as row's child
+   * forceInsertHTML would insert DOM as anchorNode of range 
+   **/
+  'forceInsertHTML' (rh, arg) {
+    let v = rh.newRow()
+    let s = rh.getSelection()
+    v.innerHTML = arg
+    if (v.hasChildNodes()) {
+      for (let i = 0; i < v.childNodes.length; i++) {
+        let curNode = v.childNodes[i]
+        rh.range.deleteContents()
+        rh.range.insertNode(curNode)
+        s.collapse(curNode, 1)
       }
     }
-    rh.range.deleteContents()
-    rh.range.insertNode(fragment)
     return
   },
   'indent' (rh, arg) {
@@ -265,11 +273,11 @@ const commands = {
     }
   },
   'insertUnorderedList' (rh, arg) {
-    console.log('insertUnorderedList')
     // do not insert ul into a row
     document.execCommand('insertUnorderedList', false, null)
     let startNode = rh.getSelection().anchorNode
     let row = rh.getRow(startNode)
+    let s = rh.getSelection()
 
     // startNode is edit zone
     if (!row) return
@@ -283,6 +291,18 @@ const commands = {
         row.parentNode.replaceChild(maybeIsUl, row)
         row = maybeIsUl
       }
+
+      // remove br
+      if (row.nextSibling && row.nextSibling.nodeName === 'BR') {
+        row.nextSibling.parentNode.removeChild(row.nextSibling)
+      }
+
+      // special treatment for ul>li, to let module inspect run
+      // if ul and ol is bind into a module's tab, this should be change
+      if (s.isCollapsed && !rh.editor.modulesMap['ul'].moduleInspectResult) {
+        commands['insertHTML'](rh, '&#8203;')
+      }
+      return
     } else {
       let startNode = rh.getSelection().anchorNode
       if (startNode === rh.editZone()) {
@@ -290,22 +310,11 @@ const commands = {
         commands['insertHTML'](rh, row.outerHTML)
       }
     }
-
-    // special treatment for ul>li, to let module inspect run
-    if (row) {
-
-      // if ul and ol is bind into a module's tab, this should be change
-      if (!rh.editor.modulesMap['ul'].moduleInspectResult) {
-        if (!row.innerHTML.match(/\u200B/g)) {
-          commands['insertHTML'](rh, '&#8203;')
-        }
-      }
-      return
-    }
   },
   'insertOrderedList' (rh, arg) {
     // do not insert ul into a row
     document.execCommand('insertOrderedList', false, null)
+    let s = rh.getSelection()
     let startNode = rh.getSelection().anchorNode
     let row = rh.getRow(startNode)
 
@@ -321,20 +330,24 @@ const commands = {
         row.parentNode.replaceChild(maybeIsUl, row)
         row = maybeIsUl
       }
+
+      // remove br
+      if (row.nextSibling && row.nextSibling.nodeName === 'BR') {
+        row.nextSibling.parentNode.removeChild(row.nextSibling)
+      }
+
+      // special treatment for ul>li, to let module inspect run
+      // if ul and ol is bind into a module's tab, this should be change
+      if (s.isCollapsed && !rh.editor.modulesMap['ol'].moduleInspectResult) {
+        commands['insertHTML'](rh, '&#8203;')
+      }
+      return
     } else {
       let startNode = rh.getSelection().anchorNode
       if (startNode === rh.editZone()) {
         row = rh.newRow({br: true})
         commands['insertHTML'](rh, row.outerHTML)
       }
-    }
-
-    // special treatment for ul>li, to let module inspect run
-    if (row) {
-      let innerHTML = row.innerHTML
-      commands['insertHTML'](rh, '&#8203;')
-      row.innerHTML = innerHTML
-      return
     }
   }
 }
@@ -348,6 +361,9 @@ commands.underline = underline
 commands.strikeThrough = strikeThrough
 commands.bold = bold
 commands.italic = italic
-Object.assign(commands, quote, todo, itodo)
+commands.justifyLeft = justifyLeft
+commands.justifyCenter = justifyCenter
+commands.justifyRight = justifyRight
+Object.assign(commands, quote, todo)
 
 export default commands

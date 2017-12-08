@@ -1,0 +1,103 @@
+@import "reset.styl"
+
+.my-vue-editor
+  display: block
+  border: 1px solid #d1d1d1
+  padding: 0
+  img
+    max-width: 98%
+  .toolbar
+    height: auto
+    border-bottom: 1px solid #d1d1d1
+    background: #f8f8f8
+    padding: 6px 8px
+    white-space: normal
+    .tabs
+      &:after
+        content: ''
+        display: block
+        clear: both
+      .tab
+        margin: 0 2px
+        float: left
+        .icon
+          vertical-align: sub
+      .btn
+        display: inline-block
+        list-style: none
+        height: 18px
+        line-height: 18px
+        padding: 4px 6px
+        border: 0
+        position: relative
+        font: normal normal normal 12px Arial,Helvetica,Tahoma,Verdana,Sans-Serif
+        color: #000
+        text-align: center
+        white-space: nowrap
+        text-decoration: none
+        &:hover
+          padding: 3px 5px
+          background: #f0f0f0
+          border: 1px #bcbcbc solid
+        &.highLight
+          padding: 3px 5px
+          background: #e5e5e5
+          border: 1px #bcbcbc solid
+        &.forbidden
+          cursor: not-allowed
+          opacity: .3
+  .content
+    box-sizing: border-box
+    width: 100%
+    clear both
+    outline: none
+    padding: 20px
+    font-size: 16px
+    line-height: 24px
+    word-wrap: break-word
+    font
+      color: #000
+    blockquote
+      min-width: 38px
+    [data-editor-quote]
+      div:first-child
+        margin-top: -21px
+      div
+        margin-left: 2px
+        outline: none
+        color: rgb(115, 115, 115)
+        font-size: 14px
+      margin: 14px 0 14px 35px
+      &::before
+        position: relative
+        top: 2px
+        left: 0
+        margin: 0px 4px 0 -24px
+        color: #b7b7b7
+        font-size: 20px
+        content: "\f10e"
+        display: inline-block
+        font: normal normal normal 14px/1 FontAwesome
+        text-rendering: auto
+        -webkit-font-smoothing: antialiased
+        transform: rotateY(180deg)
+    ul
+      ul
+        margin-left: 10%
+    li
+      margin-left: 5.5%
+    [data-editor-todo]
+      display: inline-block
+      width: 90%
+      label
+        cursor: pointer
+        position: relative
+        top: 3.5px
+        left: 2.5px
+        font-size: 16px
+        color: #cdc9c5
+      input[type=text]
+        border: none
+        outline: none
+        width: 90%
+        font-size: 14px

@@ -70,7 +70,18 @@ const insertImage = function (rh, arg) {
   }
 
   function insertBase64 (base64, id) {
-    editor.execCommand('insertHTML', `<img src="${base64}" data-editor-img="${id}">`)
+    if (config.imgOccupyNewRow) {
+      let node = rh.range.commonAncestorContainer
+      let curRow = rh.forceGetRow(node)
+      if (curRow) {
+        let newRow = rh.newRow({br: true})
+        rh.insertAfter(newRow, curRow)
+        rh.getSelection().collapse(newRow, 1)
+      }
+    }
+    editor.execCommand('insertHTML', `<img src="${base64}" data-editor-img="${id}">`, true)
+    editor.saveCurrentRange()
+    editor.execCommand('insertHTML', '&#8203;', true)
     editor.$emit('imageUpload', Object.assign(returnData, {
       status: 'everything fine',
       statusCode: 2,

@@ -1,5 +1,5 @@
 import RH from '../range-handler'
-// import './style.css'
+import './style/main.styl'
 import template from './editor.html'
 import dragPic from './drag-pic'
 import Inspector from '../module-inspect'
@@ -35,6 +35,7 @@ export default {
     return {
       modules: {},
       activeModules: [],
+      allActiveModules: [],
       fullScreen: false
     }
   },
@@ -153,23 +154,25 @@ export default {
         module.handler(new RH(this.range, this), module)
         this.$nextTick(() => {
           this.saveCurrentRange()
-          this.styleInspect()
+          this.moduleInspect()
         })
         return
       }
     },
-    styleInspect () {
+    moduleInspect () {
       if (this.range) {
         this.clearActiveModuleItem()
         this.activeModules = []
-        let texts = new RH(this.range, this).getAllTextNodesInRange()
+        this.allActiveModules = []
+        let rh = new RH(this.range, this)
+        let texts = rh.getAllTextNodesInRange()
         if (texts.length === 0 && this.range.collapsed) {
           texts.push(this.range.commonAncestorContainer)
         }
         // texts duplicate removal
         let textAftetDR = []
         texts.forEach(text => {
-          if (text.nodeType === Node.TEXT_NODE) {
+          if (text.nodeType === Node.TEXT_NODE && text.parentNode !== rh.editZone()) {
             text = text.parentNode
           }
           if (!textAftetDR.includes(text)) {
@@ -177,37 +180,56 @@ export default {
           }
         })
 
-        let tagResult = Inspector.removeDuplate(Inspector.run('tag', textAftetDR))
-        let styleResult = Inspector.removeDuplate(Inspector.run('style', textAftetDR))
-        let attributeResult = Inspector.removeDuplate(Inspector.run('attribute', textAftetDR))
-        this.activeModules = Array.from(new Set(tagResult.concat(styleResult, attributeResult)))
+        let tagResult = Inspector.run('tag', textAftetDR)
+        let tagResultRD = Inspector.removeDuplate(tagResult)
 
-        // handle style inspect logic
-        if (this.activeModules.length) {
+        let styleResult = Inspector.run('style', textAftetDR)
+        let styleResultRD = Inspector.removeDuplate(styleResult)
+
+        let attributeResult = Inspector.run('attribute', textAftetDR)
+        let attributeResultRD = Inspector.removeDuplate(attributeResult)
+
+        this.allActiveModules = tagResult.concat(styleResult, attributeResult)
+        this.activeModules = Array.from(new Set(tagResultRD.concat(styleResultRD, attributeResultRD)))
+
+        // reset
+        this.modules.forEach(module => {
+          module.forbidden = false
+          module.moduleInspectResult = false
+        })
+
+        // handle forbidden logic
+        if (this.allActiveModules.length) {
           let excludeList = []
+          this.allActiveModules.forEach(m => {
+            if (Array.isArray(m)) {
+              m.forEach(moduleName => {
+                let curModule = this.modulesMap[moduleName]
+                excludeList = excludeList.concat(curModule.exclude)
+              })
+            }
+          })
+          excludeList = Array.from(new Set(excludeList))
+          excludeList.forEach(exc => {
+            let excModule = this.modulesMap[exc]
+            if (excModule && excModule.type !== 'fn') {
+              excModule.forbidden = true
+            }
+          })
+        }
+
+        // handle highlight logic
+        if (this.activeModules.length) {
           this.modules.forEach(module => {
             module.moduleInspectResult = false
             let moduleName = module.name
             if (this.activeModules.includes(moduleName)) {
               module.moduleInspectResult = true
-              excludeList = excludeList.concat(module.exclude)
               let curModuleActiveItem = this.getCurActiveModuleItem()[moduleName]
               if (typeof curModuleActiveItem === 'string') {
                 module.moduleInspectResult = curModuleActiveItem || 'ALL'
               }
             }
-            excludeList = Array.from(new Set(excludeList))
-            excludeList.forEach(exc => {
-              let excModule = this.modulesMap[exc]
-              if (excModule && excModule.type !== 'fn') {
-                excModule.forbidden = true
-              }
-            })
-          })
-        } else {
-          this.modules.forEach(module => {
-            module.forbidden = false
-            module.moduleInspectResult = false
           })
         }
       }
@@ -226,27 +248,50 @@ export default {
     content.innerHTML = this.content
     content.addEventListener('mouseup', e => {
       this.saveCurrentRange()
-      this.styleInspect()
+      this.moduleInspect()
     }, false)
     // toolbar.addEventListener('mousedown', this.saveCurrentRange, false)
     content.addEventListener('keyup', e => {
       this.$emit('change', content.innerHTML)
       this.saveCurrentRange()
-      this.styleInspect()
+      this.moduleInspect()
     }, false)
     content.addEventListener('mouseout', e => {
       this.saveCurrentRange()
     }, false)
     content.addEventListener('paste', e => {
       this.execCommand('paste', e, true)
+      let common = this.range.commonAncestorContainer
+      if (common) {
+        if (common.nodeType === Node.TEXT_NODE) {
+          common = common.parentNode
+        }
+        if (common.scrollIntoView) {
+          common.scrollIntoView(false)
+        }
+      }
     })
     this.touchHandler = (e) => {
       if (content.contains(e.target)) {
         this.saveCurrentRange()
-        this.styleInspect()
+        this.moduleInspect()
       }
     }
     window.addEventListener('touchend', this.touchHandler, false)
+
+    // before exec command
+    // let text be a row
+    RH.prototype.before((command,  rh, arg) => {
+      let texts = rh.getAllTextNodesInRange()
+      texts.forEach(text => {
+        if (!rh.isEmptyNode(text)) {
+          rh.textToRow(text)
+        }
+      })
+      if (texts.length) {
+        rh.editor.saveCurrentRange()
+      }
+    })
 
     // handle shortcut
     content.addEventListener('keydown', e => {

@@ -94,7 +94,7 @@ Vue.use(myVueEditor, {
     inspect (add) {
       add('style', {
         fontSize: ['xx-large', 'x-large', 'large', 'medium', 'small']
-      })
+      }).add('tag', 'font')
     }
   },
   // 覆盖ul模块的相关配置
@@ -166,6 +166,6 @@ Vue.user(myVueEditor, {
 | ------------- |:-------------|:------------|
 | name      | String | 模块的名称|
 | icon      | String | 模块图标的className，默认使用fontAwesome图标|
-| exclude      | String Array | 当模块被检测到时，需要禁用的模块<br>值为'ALL'表示禁用所有模块，包括自己<br>值为'ALL_BUT_MYSELF'表示禁用除自己以外的所有模块<br>当值为Array时，传入需要禁用的模块名|
-| inspect      | Function | 模块检测|当光标处在列表中时，列表模块高亮，即列表模块被检测到，这是通过其UL标签作为检测依据<br>函数的第一个参数为名为add的方法，通过调用add方法来增加模块的检测依据，当有多个检测依据时请使用链式调用<br>add方法第一个参数为|
-| name      | String | 模块的名称|
+| exclude      | String Array | 当模块被检测到时，需要禁用的模块<br>值为'ALL'表示禁用所有模块，包括自己<br>值为'ALL_BUT_MYSELF'表示禁用除自己以外的所有模块<br>值为Array时，传入需要禁用的模块名|
+| inspect      | Function | 模块检测，当光标处在列表中时，列表模块高亮，即列表模块被检测到，这是通过其UL标签作为检测依据<br>函数的第一个参数为add方法，通过调用add方法来增加模块的检测依据，当有多个检测依据时请链式调用add<br>add方法第一个参数标示通过什么途径检测，可选'tag' 'style' 'attribute'<br>当参数1为'tag'时，参数2请传入一个标签名字符串<br>当参数1为'style'时，参数2为以styleName为key，styleValue为value的对象。注意styleName请使用驼峰形式（如：fontSize），当styleValue有多个时请使用Array的形式<br>add当参数1为'attribute'时，参数2为以attribute名为key，attribute值为value的对象，注意若希望值为任何值都满足时传入''（如：add('attribute', {'data-todo': ''})）|
+| handler      | Function | 点击模块时执行的操作，|

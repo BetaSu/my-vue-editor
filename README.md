@@ -1,6 +1,7 @@
 # my-vue-editor
 基于Vue2.x的富文本编辑器
 ## demo
+<a href="https://betasu.github.io/my-vue-editor/dist/">点击这里查看demo</a>
 更多demo请参考example目录
 ## 简介
 我们的编辑器基于<a href="https://github.com/PeakTai/vue-html5-editor">vue-html5-editor</a>二次开发。感谢其作者<a href="https://github.com/PeakTai">PeakTai</a>提供了一个简洁的富文本编辑器插件，我们在其基础上重写了原生的方法，并扩展了功能。
@@ -37,7 +38,9 @@ Vue.use(myVueEditor, options)
 
 ## 事件
 | 事件名        | 说明          |
-| ------------- |:-------------:|
+| ------------- |:-------------|
 | change      | 当编辑器内容变化时触发，参数为最新当内容 |
-| imageUpload  | 上传图片时触发，参数包括图片相应数据，replaceSrcAfterUploadFinish函数（用于当上传成功时将img的src属性由base64格式替换为服务器返回的url），deleteImgWhenUploadFail函数（用于当上传失败时候调用删除当前图片）|
+| imageUpload  | 上传图片时触发，参数包括图片相应数据，
+replaceSrcAfterUploadFinish函数（用于当上传成功时将img的src属性由base64格式替换为服务器返回的url），
+deleteImgWhenUploadFail函数（用于当上传失败时候调用删除当前图片）|
 

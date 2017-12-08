@@ -33,7 +33,7 @@ Vue.use(myVueEditor, options)
 | 配置项        | 参数类型           | 说明  | 
 | ------------- |:-------------:| -----:|
 | name      | String | 自定义组件名，默认为my-vue-editor | 
-| modules      | Array | 需要引入的内置模块 | 
+| modules      | Array | 需要使用的模块 | 
 | icons    | Object      | 覆盖指定模块的Icon |
 | commands | Object      | 自定义指令 |
 | shortcut | Object      | 自定义快捷键 | 
@@ -167,5 +167,10 @@ Vue.user(myVueEditor, {
 | name      | String | 模块的名称|
 | icon      | String | 模块图标的className，默认使用fontAwesome图标|
 | exclude      | String Array | 当模块被检测到时，需要禁用的模块<br>值为'ALL'表示禁用所有模块，包括自己<br>值为'ALL_BUT_MYSELF'表示禁用除自己以外的所有模块<br>值为Array时，传入需要禁用的模块名|
-| inspect      | Function | 模块检测，当光标处在列表中时，列表模块高亮，即列表模块被检测到，这是通过其UL标签作为检测依据<br>函数的第一个参数为add方法，通过调用add方法来增加模块的检测依据，当有多个检测依据时请链式调用add<br>add方法第一个参数标示通过什么途径检测，可选'tag' 'style' 'attribute'<br>当参数1为'tag'时，参数2请传入一个标签名字符串<br>当参数1为'style'时，参数2为以styleName为key，styleValue为value的对象。注意styleName请使用驼峰形式（如：fontSize），当styleValue有多个时请使用Array的形式<br>add当参数1为'attribute'时，参数2为以attribute名为key，attribute值为value的对象，注意若希望值为任何值都满足时传入''（如：add('attribute', {'data-todo': ''})）|
-| handler      | Function | 点击模块时执行的操作，|
+| inspect      | Function | 模块检测，当光标处在列表中时，列表模块高亮，即列表模块被检测到，这是通过其UL标签作为检测依据<br>函数的第一个参数为add方法，通过调用add方法来增加模块的检测依据，当有多个检测依据时请链式调用add<br>add方法第一个参数标示通过什么途径检测，可选'tag' 'style' 'attribute'<br>当参数1为'tag'时，参数2请传入一个标签名字符串<br>当参数1为'style'时，参数2为以styleName为key，styleValue为value的对象。注意styleName请使用驼峰形式（如：fontSize），当styleValue有多个时请使用Array的形式<br>当参数1为'attribute'时，参数2为以attribute名为key，attribute值为value的对象，注意若希望值为任何值都满足时传入''（如：add('attribute', {'data-todo': ''})）|
+| handler      | Function | 点击模块时执行的操作<br>参数1为range-handler实例，通过实例可以取得当前编辑器的Vue实例以及操作range的方法<br>我们并不推荐直接在handler中操作range，而是应该将range操作封装为command，在handler中通过编辑器实例下的execCommand方法调用command|
+| tab      | Vue instance | 常规的模块使用handler来处理点击，如果你希望实现UI（font模块的下拉列表）或者逻辑更复杂（align模块的左中右切换）的模块，请使用tab|
+| init      | Function |对应编辑器组件生命周期的created，参数1为编辑器实例<br>注意这时execCommand方法还不能使用|
+| mounted      | Function | 对应编辑器组件生命周期的mounted|
+| updated      | Function | 对应编辑器组件生命周期的updated|
+| destroyed      | Function | 对应编辑器组件生命周期的beforeDestroy|

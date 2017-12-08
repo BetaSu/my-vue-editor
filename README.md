@@ -25,6 +25,7 @@ Vue.use(myVueEditor, options)
  ```
 ## 配置
 | 配置项     | 参数类型| 说明   |例子|
+| ------------- |:-------------:| -----:|
 |  modules  |  Array | 需要引入的内置模块 | ['font', 'bold', 'italic', 'underline', 'linethrough',] |
 | 张三| 18| 女      |
 | 小明| 23| 男      |

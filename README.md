@@ -1,7 +1,7 @@
 # my-vue-editor
 基于Vue2.x的富文本编辑器
 ## demo
-<a href="https://betasu.github.io/my-vue-editor/dist/">点击这里查看demo</a>
+<a href="https://betasu.github.io/my-vue-editor/dist/">点击这里查看demo</a><br>
 更多demo请参考example目录
 ## 简介
 我们的编辑器基于<a href="https://github.com/PeakTai/vue-html5-editor">vue-html5-editor</a>二次开发。感谢其作者<a href="https://github.com/PeakTai">PeakTai</a>提供了一个简洁的富文本编辑器插件，我们在其基础上重写了原生的方法，并扩展了功能。

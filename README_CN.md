@@ -1,6 +1,6 @@
 # my-vue-editor
-基于Vue2.x的富文本编辑器
-<a href="https://github.com/BetaSu/my-vue-editor/blob/master/README_us.md">中文文档</a><br>
+基于Vue2.x的富文本编辑器<br>
+<a href="https://github.com/BetaSu/my-vue-editor/blob/master/README.md">For English</a><br>
 ## demo
 <a href="https://betasu.github.io/my-vue-editor/dist/">点击这里查看demo</a><br>
 更多demo请参考example目录
@@ -32,7 +32,7 @@ Vue.use(myVueEditor, options)
 ## 配置
  
 | 配置项        | 参数类型           | 说明  | 
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| :-----|
 | name      | String | 自定义组件名，默认为my-vue-editor | 
 | modules      | Array | 需要使用的模块 | 
 | icons    | Object      | 覆盖指定模块的Icon |

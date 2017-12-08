@@ -107,10 +107,10 @@ Vue.user(myVueEditor, {
   quote: {
     exclude: ['image', 'todo', 'ul']
   },
-  // 自定义一个名为sayHello的指令
+  // 自定义一个名为getAllTexts的指令，执行时会打印出当前range对象下的所有文本节点
   commands: {
-    sayHello (rh, arg) {
-      alert('hello!')
+    getAllTexts (rh, arg) {
+      console.log(rh.getAllTextNodeInRange())
     }
   },
   shortcut: {
@@ -122,7 +122,15 @@ Vue.user(myVueEditor, {
         save()
       }
     }
-  }
+  },
+  // 自定义一个模块，当点击该模块图标时会弹出一个窗口
+  extendModules: [{
+     name: 'smile',
+     icon: 'iui iui-icon-smile'
+     handler (rh) {
+      alert('smile~~')
+     }
+  }]
 })
 ```
 
@@ -132,8 +140,18 @@ Vue.user(myVueEditor, {
 | change      | 当编辑器内容变化时触发，参数为最新内容 |
 | imageUpload  | 上传图片时触发，参数包括图片相应数据，<br>replaceSrcAfterUploadFinish函数（用于当上传成功时将img的src属性由base64格式替换为服务器返回的url）<br>deleteImgWhenUploadFail函数（用于当上传失败时候调用删除当前图片）|
 ## 修改内置模块
-在配置项中添加以内置模块名（所有内置模块请在源码src/modules目录下查看）为key的参数，将覆盖内置模块的原有属性
+在配置项中添加以内置模块名（所有内置模块及他们的配置项请在源码src/modules目录下查看）为key的参数，将覆盖内置模块的原有属性
 ### 以image模块为例
-
-      handler (editor) {模块
-      handler (editor) {
+```javascript
+Vue.user(myVueEditor, {
+  image: {
+    // 修改image模块的图标
+    icon: 'iui-pic',
+    // 覆盖原有的压缩参数，时图片上传时不进行压缩
+    compress: null,
+    // 不能重复上传同一张图片
+    canUploadSameImage: false
+  }
+})
+```
+## 自定义模块

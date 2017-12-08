@@ -1,5 +1,5 @@
 # my-vue-editor
-A rich text editor based on Vue2.x
+A rich text editor based on Vue2.x<br>
 <a href="https://github.com/BetaSu/my-vue-editor/blob/master/README_CN.md">中文文档</a><br>
 ## demo
 <a href="https://betasu.github.io/my-vue-editor/dist/">click here to see demo</a><br>
@@ -32,7 +32,7 @@ Use
 ## Configuration
  
 | Items        | Type           | Description  | 
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:|:-----|
 | name      | String | Custom component name, the default is my-vue-editor | 
 | modules      | Array | Modules need to use | 
 | icons    | Object      | Covering the specified module's icon |
@@ -168,10 +168,10 @@ We provide some common module configuration items
 | name      | String | module's name|
 | icon      | String | module icon's className，The fontAwesome icon is used by default|
 | exclude      | String Array | disabled modules When current module is inspected<br>When value is 'ALL' means disable all modules include current module<br>When value is'ALL_BUT_MYSELF', means disabled all modules but current module<br>When value is type of Array, Input module name to be disabled|
-| inspect      | Function | 模块检测，当光标处在列表中时，列表模块高亮，即列表模块被检测到，这是通过其UL标签作为检测依据<br>函数的第一个参数为add方法，通过调用add方法来增加模块的检测依据，当有多个检测依据时请链式调用add<br>add方法第一个参数标示通过什么途径检测，可选'tag' 'style' 'attribute'<br>当参数1为'tag'时，参数2请传入一个标签名字符串<br>当参数1为'style'时，参数2为以styleName为key，styleValue为value的对象。注意styleName请使用驼峰形式（如：fontSize），当styleValue有多个时请使用Array的形式<br>当参数1为'attribute'时，参数2为以attribute名为key，attribute值为value的对象，注意若希望值为任何值都满足时传入''（如：add('attribute', {'data-todo': ''})）|
-| handler      | Function | 点击模块时执行的操作<br>参数1为range-handler实例，通过实例可以取得当前编辑器的Vue实例以及操作range的方法<br>我们并不推荐直接在handler中操作range，而是应该将range操作封装为command，在handler中通过编辑器实例下的execCommand方法调用command|
-| tab      | Vue instance | 常规的模块使用handler来处理点击，如果你希望实现UI（font模块的下拉列表）或者逻辑更复杂（align模块的左中右切换）的模块，请使用tab|
-| init      | Function |对应编辑器组件生命周期的created，参数1为编辑器实例<br>注意这时execCommand方法还不能使用|
-| mounted      | Function | 对应编辑器组件生命周期的mounted|
-| updated      | Function | 对应编辑器组件生命周期的updated|
-| destroyed      | Function | 对应编辑器组件生命周期的beforeDestroy|
+| inspect      | Function | module inspect，When the cursor is in the list, the list module is highlighted, that is, the list module is inspected, which is based on its UL label as a test basis<br>The first argument to the function is a method named add, which called to add the module's inspection basis. When there are multiple inspection bases, please call chaining<br>The first parameter of the add method indicates what path to test. The optional is 'tag' 'style' and 'attribute'<br>When parameter 1 is 'tag', parameter 2 passes in a tag name string<br>When parameter 1 is 'style', parameter 2 is an object with styleName as key and styleValue as value. Note styleName use the hump form（ex：fontSize），When there are multiple styleValue please use the form of Array<br>When parameter 1 is 'attribute', parameter 2 is an object whose key is attribute name and attribute value is value, and note that if any value is desired, pass in ''（ex：add('attribute', {'data-todo': ''})）|
+| handler      | Function | What to do when you click the module<br>Parameter 1 is range-handler instance, through which can you get the Vue instance of the current editor and the method to operate range<br>We do not recommend operating range directly in the handler, but should encapsulate the range action as a command, calling the command via the execCommand method under the editor instance in the handler|
+| tab      | Vue instance | Conventional modules use handlers for handling clicks, and if you want to implement UI (drop-down list of font modules) or more complex logic (left-to-right switching of align modules), use tab|
+| init      | Function |Corresponds to the editor component life cycle created, the parameter 1 is the editor instance. Note that the execCommand method can not be used at this time|
+| mounted      | Function | Corresponds to the editor component life cycle mounted, the parameter 1 is the editor instance.|
+| updated      | Function | Corresponds to the editor component life cycle updated, the parameter 1 is the editor instance.|
+| destroyed      | Function | Corresponds to the editor component life cycle beforeDestroy, the parameter 1 is the editor instance.|

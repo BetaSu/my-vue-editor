@@ -40,5 +40,6 @@ Vue.use(myVueEditor, options)
 | 事件名        | 说明          |
 | ------------- |:-------------|
 | change      | 当编辑器内容变化时触发，参数为最新当内容 |
-| imageUpload  | 上传图片时触发，参数包括图片相应数据，<br>replaceSrcAfterUploadFinish函数（用于当上传成功时将img的src属性由base64格式替换为服务器返回的url），deleteImgWhenUploadFail函数（用于当上传失败时候调用删除当前图片）|
+| imageUpload  | 上传图片时触发，参数包括图片相应数据，<br>replaceSrcAfterUploadFinish函数（用于当上传成功时将img的src属性由base64格式替换为服务器返回的url）<br>deleteImgWhenUploadFail函数（用于当上传失败时候调用删除当前图片）|
+## 自定义模块
 

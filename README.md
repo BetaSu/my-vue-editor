@@ -24,6 +24,10 @@ Vue.use(myVueEditor, options)
  ```javascript
  Vue.use(myVueEditor, options)
  ```
+使用
+```html
+<my-vue-editor @change='ctnChange' @imageUpload='imageUpload'></my-vue-editor>
+```
 ## 配置
  
 | 配置项        | 参数类型           | 说明  | 
@@ -37,13 +41,13 @@ Vue.use(myVueEditor, options)
 | 任何内置模块名 | Object      | 覆盖对应内置模块的属性 |
 ### 一个例子
 ```javascript
-Vue.user(myVueEditor, {
+Vue.use(myVueEditor, {
   // 覆盖内置模块的图标
   icons: {
     image: 'iui-icon iui-icon-pic',
     indent: 'iui-icon iui-icon-insert'
   },
-  // 引入的内置模块
+  // 使用的模块
   modules: [
     'font',
     'bold',
@@ -55,9 +59,9 @@ Vue.user(myVueEditor, {
     'align',
     'image',
     'quote',
-    'itodo',
-    'customSave',
-    'customDelete'
+    'todo',
+    // 这是一个自定义的模块
+    'customSave'
   ],
   // 覆盖image模块的相关配置
   image: {
@@ -155,3 +159,12 @@ Vue.user(myVueEditor, {
 })
 ```
 ## 自定义模块
+通过extendModules配置项扩展模块
+我们提供一些通用的模块配置项
+| 配置项        | 类型          | 说明   |
+| ------------- |:-------------|:------------|
+| name      | String | 模块的名称|
+| icon      | String | 模块图标的className，默认使用fontAwesome图标|
+| exclude      | String Array | 当模块被检测到时，需要禁用的模块<br>值为'ALL'表示禁用所有模块，包括自己<br>值为'ALL_BUT_MYSELF'表示禁用除自己以外的所有模块<br>当值为Array时，传入需要禁用的模块名|
+| inspect      | Function | 模块检测|当光标处在列表中时，列表模块高亮，即列表模块被检测到，这是通过其UL标签作为检测依据<br>函数的第一个参数为名为add的方法，通过调用add方法来增加模块的检测依据，当有多个检测依据时请使用链式调用<br>add方法第一个参数为|
+| name      | String | 模块的名称|

@@ -24,9 +24,16 @@ Vue.use(myVueEditor, options)
  Vue.use(myVueEditor, options)
  ```
 ## 配置
+
 | 配置项     | 参数类型| 说明   |例子|
 | ------------- |:-------------:| -----:|
 |  modules  |  Array | 需要引入的内置模块 | ['font', 'bold', 'italic', 'underline', 'linethrough',] |
 | 张三| 18| 女      |
 | 小明| 23| 男      |
  
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+

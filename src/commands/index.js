@@ -241,9 +241,11 @@ const commands = {
       })
     }
 
+    let outdentResult
     nodeList.forEach(node => {
-      doOutdent(node.nodeName, node)
+      outdentResult = doOutdent(node.nodeName, node)
     })
+    return outdentResult
 
     function weighting(text) {
       let node = rh.findSpecialAncestor(text, 'li') || rh.findSpecialAncestor(text, constant.ROW_TAG)
@@ -260,7 +262,7 @@ const commands = {
         case constant.ROW_TAG_UPPERCASE:
           let curPercent = node.style[constant.INDENT_STYLE_NAME] || '0'
           curPercent = Number(curPercent.replace('%', ''))
-          if (curPercent === 0) return
+          if (curPercent === 0) return 'NO_NEED_OUTDENT'
           node.style[constant.INDENT_STYLE_NAME] = ''
           node.style[constant.OUTDENT_STYLE_NAME] = ''
           let targetIndent = curPercent - constant.INDENT_WIDTH_PERCENT

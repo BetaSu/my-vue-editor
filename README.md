@@ -1,7 +1,7 @@
 # my-vue-editor
 A rich text editor based on Vue2.x<br>
 <a href="https://github.com/BetaSu/my-vue-editor/blob/master/README_CN.md">中文文档</a><br>
-## demo
+## Demo
 <a href="https://betasu.github.io/my-vue-editor/dist/index.html">click here to see demo</a><br>
 More demo please refer to the example directory
 ## Introduction

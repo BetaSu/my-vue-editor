@@ -1,7 +1,7 @@
 # my-vue-editor
 基于Vue2.x的富文本编辑器<br>
 <a href="https://github.com/BetaSu/my-vue-editor/blob/master/README.md">For English</a><br>
-## demo
+## Demo
 <a href="https://betasu.github.io/my-vue-editor/dist/index.html">点击这里查看demo</a><br>
 更多demo请参考example目录
 ## 简介

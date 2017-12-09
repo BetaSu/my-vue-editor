@@ -43,7 +43,10 @@ export default function (rh, e) {
 
   // row has content, cursor is at at start of the node, do outdent
   if (rh.range.collapsed && value && rh.range.startOffset === 0 && (node === row.fistElementChild || node === row.firstChild)) {
-    commands.outdent(rh, null)
+    let outdentResult = commands.outdent(rh, null)
+    if (outdentResult === 'NO_NEED_OUTDENT') {
+      return
+    }
     e.preventDefault()
     return
   }

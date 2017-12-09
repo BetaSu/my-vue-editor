@@ -20,7 +20,7 @@
 </head>
 <body>
 <div id="app">
-    <my-vue-editor></my-vue-editor>
+    <my-vue-editor :content="content" @change="ctnUpdate"></my-vue-editor>
 </div>
 <script>
   let editorConfig = {
@@ -42,7 +42,15 @@
   }
   Vue.use(myVueEditor, editorConfig)
   let app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+      content: '<p contenteditable="true"></p><p data-editor-todo="todo-1512788316054.8813" contenteditable="false"><input type="checkbox"><input type="text" placeholder="待办事项" data-editor-value="132" style="text-decoration: none;"></p>'
+    },
+    methods: {
+      ctnUpdate (data) {
+        this.content = data
+      }
+    }
   })
 </script>
 </body>

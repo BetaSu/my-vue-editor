@@ -73,6 +73,7 @@ const t = {
       ctnCheckedLogic()
 
       function ctnCheckedLogic() {
+        ctn.value = ctn.value || ctn.getAttribute('data-editor-value')
         ctn.setAttribute('data-editor-value', ctn.value)
         if (btn.checked) {
           ctn.style.textDecoration = 'line-through'

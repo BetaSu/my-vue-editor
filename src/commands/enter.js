@@ -1,8 +1,9 @@
 import commands from './index'
 
 export default function (rh, e) {
+  let node = rh.range.commonAncestorContainer
+  let row = rh.getRow(node)
   if (rh.range.collapsed) {
-    let node = rh.range.commonAncestorContainer
 
     // rewrite li enter logic
     if (rh.findSpecialAncestor(node, 'li') && rh.isEmptyNode(node)) {
@@ -15,5 +16,15 @@ export default function (rh, e) {
         commands['insertOrderedList'](rh, e)
       }
     }
+  }
+
+  // clear new row's indent
+  if (row) {
+    e.preventDefault()
+    let newRow = rh.newRow({br: true})
+    // restore align
+    newRow.style.textAlign = row.style.textAlign
+    rh.insertAfter(newRow, row)
+    rh.getSelection().collapse(newRow, 1)
   }
 }

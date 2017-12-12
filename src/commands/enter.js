@@ -2,7 +2,6 @@ import commands from './index'
 
 export default function (rh, e) {
   let node = rh.range.commonAncestorContainer
-  let row = rh.getRow(node)
   if (rh.range.collapsed) {
 
     // rewrite li enter logic
@@ -17,14 +16,17 @@ export default function (rh, e) {
       }
     }
   }
+  afterEnter(rh, e)
+}
 
-  // clear new row's indent
-  if (row) {
-    e.preventDefault()
-    let newRow = rh.newRow({br: true})
-    // restore align
-    newRow.style.textAlign = row.style.textAlign
-    rh.insertAfter(newRow, row)
-    rh.getSelection().collapse(newRow, 1)
-  }
+function afterEnter(rh, e) {
+  setTimeout(function () {
+    let node = rh.getSelection().baseNode
+    let row = rh.getRow(node)
+    // clear new row's indent
+    if (row) {
+      row.style.marginLeft = ''
+      row.style.marginRight = ''
+    }
+  })
 }

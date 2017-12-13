@@ -283,6 +283,18 @@ export default {
     // before exec command
     // let text be a row
     RH.prototype.before((command,  rh, arg) => {
+      let node = rh.range.commonAncestorContainer
+      // handle editor with no content
+      if (rh.isEmptyNode(node) && node === rh.editZone()) {
+        let firstChild = node.firstElementChild
+        if (firstChild && firstChild.nodeName === 'BR') {
+          node.removeChild(firstChild)
+        }
+        let newRow = rh.newRow({br: true})
+        node.appendChild(newRow)
+        rh.getSelection().collapse(newRow, 1)
+        return
+      }
       let texts = rh.getAllTextNodesInRange()
       texts.forEach(text => {
         if (!rh.isEmptyNode(text)) {

@@ -246,7 +246,8 @@ export default {
     const content = this.$refs.content
     const toolbar = this.$refs.toolbar
     content.innerHTML = this.content
-    content.addEventListener('mouseup', e => {
+    // add eventListener at document to handle selection
+    document.addEventListener('mouseup', e => {
       this.saveCurrentRange()
       this.moduleInspect()
     }, false)

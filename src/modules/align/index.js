@@ -6,7 +6,7 @@ export default {
   tab,
   inspect (add) {
     add('style', {
-      'textAlign': ['left', 'center', 'right', 'justify']
+      'textAlign': ['center', 'right']
     })
   }
 }

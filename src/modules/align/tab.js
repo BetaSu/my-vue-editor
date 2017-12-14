@@ -18,7 +18,6 @@ export default {
         key,
         type: this.alignMap[key]
       }
-      this.setAlign(index)
     }
   },
   data () {

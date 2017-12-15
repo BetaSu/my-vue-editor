@@ -1,5 +1,7 @@
 # my-vue-editor
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://github.com/BetaSu/my-vue-editor)
+[![npm (scoped)](https://img.shields.io/npm/v/@cycle/core.svg)](https://github.com/BetaSu/my-vue-editor)
+
 A rich text editor based on Vue2.x<br>
 <a href="https://github.com/BetaSu/my-vue-editor/blob/master/README_CN.md">中文文档</a><br>
 ## Demo

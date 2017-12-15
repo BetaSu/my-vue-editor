@@ -27,7 +27,7 @@ Installed by the global variable myVueEditor
  ```
 Use
 ```html
-<my-vue-editor @change='ctnChange' @imageUpload='imageUpload'></my-vue-editor>
+<my-vue-editor :content="content" @change='ctnChange' @imageUpload='imageUpload'></my-vue-editor>
 ```
 ## Configuration
  

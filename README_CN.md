@@ -27,7 +27,7 @@ Vue.use(myVueEditor, options)
  ```
 使用
 ```html
-<my-vue-editor @change='ctnChange' @imageUpload='imageUpload'></my-vue-editor>
+<my-vue-editor :content="content" @change='ctnChange' @imageUpload='imageUpload'></my-vue-editor>
 ```
 ## 配置
  

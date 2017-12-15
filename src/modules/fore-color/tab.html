@@ -1,0 +1,7 @@
+<li ref="tab" class="fore-color-tab tab-with-dropdown" @mouseenter="showListFn" @mouseleave="showList = false">
+    <i class="icon fa fa-font"></i>
+    <div class="choosed" :style="{'background': choosed}"></div>
+    <ul class="dropdown" v-if="showList">
+        <li v-for="color in colors" :style="{'background': color}" @click="changeColor(color)"></li>
+    </ul>
+</li>

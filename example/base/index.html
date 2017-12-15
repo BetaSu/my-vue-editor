@@ -26,6 +26,7 @@
   let editorConfig = {
     modules: [
       'font',
+      'foreColor',
       'bold',
       'italic',
       'underline',
@@ -44,7 +45,7 @@
   let app = new Vue({
     el: '#app',
     data: {
-      content: '<p contenteditable="true"></p><p data-editor-todo="todo-1512788316054.8813" contenteditable="false"><input type="checkbox"><input type="text" placeholder="待办事项" data-editor-value="132" style="text-decoration: none;"></p>'
+      content: ''
     },
     methods: {
       ctnUpdate (data) {

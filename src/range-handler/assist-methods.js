@@ -18,9 +18,7 @@ const methods = {
       const br = document.createElement('br')
       row.appendChild(br)
     }
-    if (data.contenteditable !== false) {
-      row.setAttribute('contenteditable', true)
-    }
+    row.setAttribute('contenteditable', data.contenteditable !== false)
     return row
   },
   // get selection

@@ -3,7 +3,6 @@ import config from './config'
 
 export default {
   name: 'font',
-  icon: 'iui-icon iui-icon-spanner',
   tab,
   config,
   inspect (add) {

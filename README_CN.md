@@ -1,4 +1,8 @@
 # my-vue-editor
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://github.com/BetaSu/my-vue-editor)
+[![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)](https://github.com/BetaSu/my-vue-editor)
+[![Plugin on redmine.org](https://img.shields.io/redmine/plugin/stars/redmine_xlsx_format_issue_exporter.svg)](https://github.com/BetaSu/my-vue-editor)
+
 基于Vue2.x的富文本编辑器<br>
 <a href="https://github.com/BetaSu/my-vue-editor/blob/master/README.md">For English</a><br>
 ## Demo

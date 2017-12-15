@@ -17,7 +17,7 @@
             overflow: auto;
         }
     </style>
-<script type="text/javascript" src="my-vue-editor.js"></script></head>
+</head>
 <body>
 <div id="app">
     <my-vue-editor :content="content" @change="ctnUpdate"></my-vue-editor>
@@ -39,7 +39,11 @@
       'image',
       'quote',
       'todo'
-    ]
+    ],
+    // edit image module's configuration
+    image: {
+      imgOccupyNewRow: true
+    }
   }
   Vue.use(myVueEditor, editorConfig)
   let app = new Vue({

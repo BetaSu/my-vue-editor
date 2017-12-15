@@ -13,6 +13,7 @@ import ul from './ul'
 import ol from './ol'
 import linethrough from './linethrough'
 import itodo from './icourt-todo'
+import foreColor from './fore-color'
 
 
 /**
@@ -33,5 +34,6 @@ export default [
   ul,
   ol,
   linethrough,
-  itodo
+  itodo,
+  foreColor
 ]

@@ -152,11 +152,11 @@ Vue.use(myVueEditor, {
 在配置项中添加以内置模块名（所有内置模块及他们的配置项请在源码src/modules目录下查看）为key的参数，将覆盖内置模块的原有属性
 ### 以image模块为例
 ```javascript
-Vue.user(myVueEditor, {
+Vue.use(myVueEditor, {
   image: {
     // 修改image模块的图标
     icon: 'iui-pic',
-    // 覆盖原有的压缩参数，时图片上传时不进行压缩
+    // 覆盖原有的压缩参数，使图片上传时不进行压缩
     compress: null,
     // 不能重复上传同一张图片
     canUploadSameImage: false

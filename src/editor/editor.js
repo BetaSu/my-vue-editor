@@ -115,10 +115,10 @@ export default {
     },
     saveCurrentRange(){
       const selection = window.getSelection ? window.getSelection() : document.getSelection()
-      if (!selection.rangeCount) {
+      const content = this.$refs.content
+      if (!selection.rangeCount || !content) {
         return
       }
-      const content = this.$refs.content
       for (let i = 0; i < selection.rangeCount; i++) {
         const range = selection.getRangeAt(0)
         let start = range.startContainer

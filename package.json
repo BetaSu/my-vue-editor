@@ -2,7 +2,7 @@
   "name": "my-vue-editor",
   "version": "1.0.11",
   "description": "a rich text editor for VUE 2.x",
-  "main": ".dist/my-vue-editor.js",
+  "main": "dist/my-vue-editor.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server --open"

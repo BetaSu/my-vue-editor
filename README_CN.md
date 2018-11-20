@@ -29,6 +29,7 @@ Vue.use(myVueEditor, options)
  ```javascript
  Vue.use(myVueEditor, options)
  ```
+注意：项目依赖 font-awesome，如需使用内置图标请手动安装 font-awesome。
 使用
 ```html
 <my-vue-editor :content="content" @change='ctnChange' @imageUpload='imageUpload'></my-vue-editor>
